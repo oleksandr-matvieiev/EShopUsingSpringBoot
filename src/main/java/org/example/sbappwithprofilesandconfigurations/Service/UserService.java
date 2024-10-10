@@ -27,21 +27,15 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
-        Set<SimpleGrantedAuthority> authorities = user.getRoles()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName()))
-                .collect(Collectors.toSet());
+        User user = userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found."));
+        Set<SimpleGrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName())).collect(Collectors.toSet());
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
 
     @Transactional
     public void assignRole(String username, RoleName roleName) {
-        User user = userRepo.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
-        Role role = roleRepo.findRoleByRoleName(roleName)
-                .orElseThrow(() -> new IllegalArgumentException("Role not found: " + roleName));
+        User user = userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found."));
+        Role role = roleRepo.findRoleByRoleName(roleName).orElseThrow(() -> new IllegalArgumentException("Role not found: " + roleName));
 
         if (!user.getRoles().contains(role)) {
             user.getRoles().add(role);

@@ -24,7 +24,7 @@ public class RegistrationController {
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
 
-        User registeredUser = registrationService.registerUser(user.getUsername(), user.getPassword(), Set.of(RoleName.USER));
+        User registeredUser = registrationService.registerUser(user.getUsername(), user.getEmail(), user.getPassword(), Set.of(RoleName.USER));
         if (registeredUser.getUsername() != null) {
             return ResponseEntity.ok("User registered successfully");
         } else {

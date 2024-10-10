@@ -22,12 +22,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizationRequest -> authorizationRequest
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/api/auth/register").permitAll()  // public registration
-                        .requestMatchers("/product/save").hasAnyRole("ADMIN","SUPER_ADMIN")  // only for admins
+                        .requestMatchers("api/product/get").hasRole("USER")
+                        .requestMatchers("/product/save").hasAnyRole("ADMIN", "SUPER_ADMIN")  // only for admins
                         .requestMatchers("/**").hasRole("SUPER_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
-                .httpBasic(httpBasic -> {});
+                .httpBasic(httpBasic -> {
+                });
 
         return http.build();
     }
@@ -41,4 +43,6 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+
 }

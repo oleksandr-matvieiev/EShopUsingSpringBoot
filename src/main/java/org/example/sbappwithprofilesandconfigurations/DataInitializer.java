@@ -24,7 +24,7 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args)  {
+    public void run(String... args) {
         if (roleRepo.findRoleByRoleName(RoleName.USER).isEmpty()) {
             roleRepo.save(new Role(RoleName.USER));
         }
@@ -35,13 +35,9 @@ public class DataInitializer implements CommandLineRunner {
             roleRepo.save(new Role(RoleName.SUPER_ADMIN));
         }
         if (userRepo.findByUsername("superadmin").isEmpty()) {
-            Role superAdminRole = roleRepo.findRoleByRoleName(RoleName.SUPER_ADMIN)
-                    .orElseThrow(() -> new RuntimeException("SUPER_ADMIN role not found"));
-            User superAdmin = new User(
-                    "superadmin",
-                    encoder.encode("superadmin123"),
-                    Set.of(superAdminRole)
-            );
+            Role superAdminRole = roleRepo.findRoleByRoleName(RoleName.SUPER_ADMIN).orElseThrow(() -> new RuntimeException("SUPER_ADMIN role not found"));
+            User superAdmin = new User("superadmin", "selfimen2454@gmail.com", encoder.encode("superadmin123"));
+            superAdmin.setRoles(Set.of(superAdminRole));
             userRepo.save(superAdmin);
             System.out.println("Super admin created with login 'superadmin' and password 'superadmin123'");
         }
