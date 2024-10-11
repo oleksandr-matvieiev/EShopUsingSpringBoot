@@ -36,7 +36,7 @@ This is the backend of an online shop platform built using **Spring Boot**. The 
 git clone https://github.com/your-repository/online-shop-backend.git
 cd online-shop-backend
 
-**### Step 2: Configure Database#**
+**### Step 2: Configure Database**
 1. In the src/main/resources/application.properties, configure your database connection:
 
   spring.datasource.url=jdbc:mysql://localhost:3306/your_database_name
