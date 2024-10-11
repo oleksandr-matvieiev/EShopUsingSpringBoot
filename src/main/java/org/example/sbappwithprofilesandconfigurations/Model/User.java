@@ -20,7 +20,6 @@ public class User {
     @Email
     @Column(unique = true)
     private String email;
-
     @NotEmpty(message = "Password is required")
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)

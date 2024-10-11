@@ -22,7 +22,6 @@ public class AdminController {
     public AdminController(UserService service) {
         this.service = service;
     }
-
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PostMapping("/assign-role")
     public ResponseEntity<String> assignRole(@RequestParam String username, @RequestParam RoleName role) {

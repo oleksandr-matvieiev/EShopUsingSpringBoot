@@ -15,7 +15,6 @@ import java.util.List;
 public class ProductController {
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
     private final ProductService service;
-
     public ProductController(ProductService service) {
         this.service = service;
     }

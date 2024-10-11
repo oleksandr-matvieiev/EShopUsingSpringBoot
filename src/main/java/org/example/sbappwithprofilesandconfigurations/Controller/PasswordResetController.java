@@ -31,7 +31,6 @@ public class PasswordResetController {
         }
 
     }
-
     @PostMapping("/reset-password")
     public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
         logger.info("Resetting password for token: {}", token);

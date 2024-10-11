@@ -40,7 +40,6 @@ public class PasswordResetService {
         emailService.sendPasswordResetEmail(user.getEmail(), resetLink);
         logger.info("Password reset request for user with email {} send", email);
     }
-
     public void resetPassword(String resetToken, String newPassword) {
         User user = userRepo.findByResetToken(resetToken).orElseThrow(() -> new IllegalArgumentException("Invalid token"));
         if (user.getTokenExpiryDate().isBefore(LocalDateTime.now())) {

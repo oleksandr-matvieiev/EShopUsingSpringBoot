@@ -22,7 +22,6 @@ public class UserService implements UserDetailsService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private final UserRepo userRepo;
     private final RoleRepo roleRepo;
-
     public UserService(UserRepo userRepo, RoleRepo roleRepo) {
         this.userRepo = userRepo;
         this.roleRepo = roleRepo;

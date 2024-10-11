@@ -11,7 +11,6 @@ public class Role {
     @Enumerated(EnumType.STRING)
     @Column(unique = true)
     private RoleName roleName;
-
     public Role() {
     }
 

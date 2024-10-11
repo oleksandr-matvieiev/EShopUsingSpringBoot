@@ -28,7 +28,6 @@ public class ProductService {
         this.productRepo = productRepo;
         this.categoryRepo = categoryRepo;
     }
-
     public Product getProductByName(String name) {
         return productRepo.findByName(name)
                 .orElseThrow(() -> {

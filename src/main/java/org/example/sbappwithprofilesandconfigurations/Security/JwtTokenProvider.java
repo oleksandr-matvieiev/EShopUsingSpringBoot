@@ -14,12 +14,11 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-
     public String generateToken(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Date now = new Date();
-        //24 hours
-        long JWT_EXPIRATION_MS = 86400000;
+
+        long JWT_EXPIRATION_MS = 86400000;        //24 hours
         Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION_MS);
 
         return Jwts.builder()

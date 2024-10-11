@@ -12,12 +12,8 @@ public class Product {
 
     @NotEmpty(message = "Product name is required")
     private String name;
-
-
     private double price;
-
     private String imageUrl;
-
     private int quantity;
 
     @ManyToOne

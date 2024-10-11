@@ -49,7 +49,6 @@ public class AuthController {
                 logger.warn("User registration failed for {}", user.getUsername());
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Registration failed");
             }
-
         } catch (Exception e) {
             logger.error("Error during user registration for {}: {}", user.getUsername(), e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Registration failed");

@@ -15,7 +15,6 @@ public class EmailService {
         this.javaMailSender = javaMailSender;
     }
 
-
     public void sendPasswordResetEmail(String email, String resetLink) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();

@@ -22,7 +22,6 @@ public class DataInitializer implements CommandLineRunner {
         this.userRepo = userRepo;
         this.encoder = encoder;
     }
-
     @Override
     public void run(String... args) {
         if (roleRepo.findRoleByRoleName(RoleName.USER).isEmpty()) {
