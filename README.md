@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Online Shop Backend
 
 ## Overview
@@ -121,3 +122,5 @@ Use Maven to build and run the project:
 
 **##Testing**
   -Use Postman or Curl to test the API endpoints.
+=======
+
