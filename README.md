@@ -36,14 +36,14 @@ This is the backend of an online shop platform built using **Spring Boot**. The 
 git clone https://github.com/your-repository/online-shop-backend.git
 cd online-shop-backend
 
-**### Step 2: Configure Database**
+### Step 2: Configure Database
 1. In the src/main/resources/application.properties, configure your database connection:
 
   spring.datasource.url=jdbc:mysql://localhost:3306/your_database_name
   spring.datasource.username=your_username
   spring.datasource.password=your_password
 
-**###Step 3: Set up Email for password reset**
+### Step 3: Set up Email for password reset
 To enable password reset functionality, configure email settings in application.properties:
 
   spring.mail.host=smtp.gmail.com
@@ -53,16 +53,16 @@ To enable password reset functionality, configure email settings in application.
   spring.mail.properties.mail.smtp.auth=true
   spring.mail.properties.mail.smtp.starttls.enable=true
 
-**###Step 4: Run the Application**
+### Step 4: Run the Application
 Use Maven to build and run the project:
 
   mvn clean install
   mvn spring-boot:run
 
-**###Step 5: Access the api**
+### Step 5: Access the api
  - The API will be available at http://localhost:8080.
 
-**##Usage**
+## Usage
 **1. User registration**
   - To register a new user, send a POST request to:
   POST /api/auth/register
@@ -112,12 +112,12 @@ Use Maven to build and run the project:
   -Filter products by price range:
   GET /api/product/filter-by-price?minPrice=10&maxPrice=50
 
-**## API Security**
+** ## API Security**
   -JWT Authentication: All endpoints (except login, registration, and password reset) are secured using JWT tokens.
   -Role-Based Access Control: Different roles (USER, ADMIN, SUPER_ADMIN) have different levels of access to the API.
     -User: Can browse products and manage their own account.
     -Admin: Can manage products, assign roles, and view users.
     -Super Admin: Has full access to all endpoints and can assign roles.
 
-**##Testing**
+** ##Testing**
   -Use Postman or Curl to test the API endpoints.
