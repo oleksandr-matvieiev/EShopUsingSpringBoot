@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Service
 public class RegistrationService {
-    private final Logger logger = LoggerFactory.getLogger(RegistrationService.class);
+    private static final Logger logger = LoggerFactory.getLogger(RegistrationService.class);
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepo roleRepo;
@@ -31,7 +31,11 @@ public class RegistrationService {
 
         Set<Role> roles = new HashSet<>();
         for (RoleName roleName : roleNames) {
-            Role role = roleRepo.findRoleByRoleName(roleName).orElseThrow(() -> new IllegalArgumentException("Role not found: " + roleName));
+            Role role = roleRepo.findRoleByRoleName(roleName)
+                    .orElseThrow(() -> {
+                        logger.error("Role not found: {}", roleName);
+                        return new IllegalArgumentException("Role not found: " + roleName);
+                    });
             roles.add(role);
         }
         if (userRepo.findByUsername(username).isPresent()) {
@@ -41,6 +45,7 @@ public class RegistrationService {
         String encodedPassword = passwordEncoder.encode(password);
         User user = new User(username, email, encodedPassword);
         user.setRoles(roles);
+        logger.info("User {} registered successfully", username);
         return userRepo.save(user);
     }
 }

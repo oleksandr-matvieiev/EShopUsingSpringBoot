@@ -34,6 +34,8 @@ public class DataInitializer implements CommandLineRunner {
         if (roleRepo.findRoleByRoleName(RoleName.SUPER_ADMIN).isEmpty()) {
             roleRepo.save(new Role(RoleName.SUPER_ADMIN));
         }
+
+
         if (userRepo.findByUsername("superadmin").isEmpty()) {
             Role superAdminRole = roleRepo.findRoleByRoleName(RoleName.SUPER_ADMIN).orElseThrow(() -> new RuntimeException("SUPER_ADMIN role not found"));
             User superAdmin = new User("superadmin", "selfimen2454@gmail.com", encoder.encode("superadmin123"));

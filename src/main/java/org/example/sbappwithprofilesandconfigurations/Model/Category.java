@@ -13,7 +13,7 @@ public class Category {
     private Long id;
     @Column(unique = true)
     private String name;
-    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Product> products;
 

@@ -13,7 +13,8 @@ public class Product {
     @NotEmpty(message = "Product name is required")
     private String name;
 
-    private int price;
+
+    private double price;
 
     private String imageUrl;
 
@@ -45,11 +46,11 @@ public class Product {
         this.name = name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -60,6 +61,7 @@ public class Product {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
     public String getImageUrl() {
         return imageUrl;
     }
