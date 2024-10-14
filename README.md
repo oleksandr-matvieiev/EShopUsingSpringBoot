@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Online Shop Backend
 
 ## Overview
@@ -17,7 +16,7 @@ This is the backend of an online shop platform built using **Spring Boot**. The 
 - **Java 17** and **Spring Boot**
 - **Spring Security** with role-based authentication and authorization
 - **Spring Data JPA** for database access
-- **H2** or **MySQL** as the database (configurable via profiles)
+- **MySQL** as the database 
 - **Jakarta Mail** for sending email
 - **MultipartFile** for file uploads
 - **JSON Web Token (JWT)** for securing the API
@@ -122,5 +121,3 @@ Use Maven to build and run the project:
 
 **##Testing**
   -Use Postman or Curl to test the API endpoints.
-=======
-
