@@ -3,6 +3,7 @@ package org.example.sbappwithprofilesandconfigurations.Model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -14,6 +15,7 @@ public class User {
     private Long id;
 
     @NotEmpty(message = "Username is required")
+    @Size(min = 3,max = 50,message = "Username must be between 3 and 50 characters")
     @Column(unique = true)
     private String username;
     @NotEmpty(message = "Email is required")
@@ -21,6 +23,7 @@ public class User {
     @Column(unique = true)
     private String email;
     @NotEmpty(message = "Password is required")
+    @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

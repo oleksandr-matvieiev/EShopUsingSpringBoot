@@ -1,32 +1,40 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './ProductList.css';
 
 const ProductList = () => {
-    const [products,setProducts]=useState([]);
+    const [products, setProducts] = useState([]);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/product/get')
-            .then(response=>{
-                console.log(response.data)
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/api/product/get');
                 setProducts(response.data);
-            })
-            .catch(error=>{
-                console.error("Error fetching products",error)
-            })
+            } catch (err) {
+                console.error("Error fetching products", err);
+                setError("Failed to fetch products.");
+            }
+        };
+        fetchProducts();
     }, []);
 
     return (
-        <div>
+        <div className="product-container">
             <h1>Products</h1>
-            <ul>
-                {products.map(product=>(
-                    <li key={product.id}>
+            {error && <p style={{color: 'red'}}>{error}</p>}
+            <div className="product-grid">
+                {products.map(product => (
+                    <div className="product-card" key={product.id}>
+                        <img src={`http://localhost:8080${product.imageUrl}`} alt={product.name}
+                             className="product-image"/>
+
                         <h2>{product.name}</h2>
-                        <p>Price: {product.price}</p>
+                        <p>Price: ${product.price}</p>
                         <p>Quantity: {product.quantity}</p>
-                    </li>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

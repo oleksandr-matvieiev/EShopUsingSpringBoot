@@ -1,15 +1,28 @@
 // src/components/Register.js
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import axios from 'axios';
 
 const Register = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [message, setMessage] = useState(null)
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Запит до API реєстрації
-        console.log("Registering...");
+        try {
+            const respone = await axios.post('http://localhost:8080/api/auth/register',
+                {
+                    username,
+                    password,
+                    email
+                });
+            setMessage(respone.data)
+        } catch (err) {
+            console.error("Registration failed: ", err)
+            setMessage("Registration failed. Try again")
+        }
+
     };
 
     return (

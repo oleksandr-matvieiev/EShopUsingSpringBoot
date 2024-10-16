@@ -7,6 +7,8 @@ import org.example.sbappwithprofilesandconfigurations.Repo.RoleRepo;
 import org.example.sbappwithprofilesandconfigurations.Repo.UserRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,6 +24,7 @@ public class UserService implements UserDetailsService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private final UserRepo userRepo;
     private final RoleRepo roleRepo;
+
     public UserService(UserRepo userRepo, RoleRepo roleRepo) {
         this.userRepo = userRepo;
         this.roleRepo = roleRepo;
@@ -57,6 +60,26 @@ public class UserService implements UserDetailsService {
             user.getRoles().add(role);
             logger.info("Assigning role {} to user {}", roleName, username);
             userRepo.save(user);
+        }
+    }
+
+    @Transactional
+    public Page<User> getUsersWithFilters(String search, String role, Pageable pageable) {
+        Role roleEntity = null;
+
+        if (role != null) {
+            roleEntity = roleRepo.findRoleByRoleName(RoleName.valueOf(role))
+                    .orElseThrow(() -> new IllegalArgumentException("Role not found: " + role));
+        }
+
+        if (search != null && roleEntity != null) {
+            return userRepo.findByUsernameContainingAndRoles(search, roleEntity, pageable);
+        } else if (search != null) {
+            return userRepo.findByUsernameContaining(search, pageable);
+        } else if (roleEntity != null) {
+            return userRepo.findByRoles(roleEntity, pageable);
+        } else {
+            return userRepo.findAll(pageable);
         }
     }
 }

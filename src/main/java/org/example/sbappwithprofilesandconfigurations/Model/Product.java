@@ -2,6 +2,7 @@ package org.example.sbappwithprofilesandconfigurations.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
@@ -12,8 +13,10 @@ public class Product {
 
     @NotEmpty(message = "Product name is required")
     private String name;
+    @Min(value = 0,message = "Price must be positive")
     private double price;
     private String imageUrl;
+    @Min(value = 0, message = "Quantity must be non-negative")
     private int quantity;
 
     @ManyToOne

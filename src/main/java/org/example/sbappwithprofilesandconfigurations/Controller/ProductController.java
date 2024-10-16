@@ -15,6 +15,7 @@ import java.util.List;
 public class ProductController {
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
     private final ProductService service;
+
     public ProductController(ProductService service) {
         this.service = service;
     }
@@ -22,10 +23,19 @@ public class ProductController {
     @GetMapping("/get")
     public List<Product> getAllProducts() {
         logger.info("Fetching all products");
-        return service.getAllProducts();
+        List<Product> products = service.getAllProducts();
+
+        products.forEach(product -> {
+            String imagePath = product.getImageUrl();
+            product.setImageUrl(imagePath);
+        });
+
+        return products;
     }
 
+
     @PostMapping("/save")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Product> saveProduct(@RequestParam String productName,
                                                @RequestParam double price,
                                                @RequestParam int quantity,

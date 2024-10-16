@@ -22,12 +22,13 @@ public class ProductService {
     private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
     private final ProductRepo productRepo;
     private final CategoryRepo categoryRepo;
-    private final String uploadDir = "uploads/";
+    private final String uploadDir = "src/main/resources/static/uploads/";
 
     public ProductService(ProductRepo productRepo, CategoryRepo categoryRepo) {
         this.productRepo = productRepo;
         this.categoryRepo = categoryRepo;
     }
+
     public Product getProductByName(String name) {
         return productRepo.findByName(name)
                 .orElseThrow(() -> {
@@ -59,7 +60,7 @@ public class ProductService {
 
         if (file != null && !file.isEmpty()) {
             String imageUrl = saveImage(file);
-            product.setImageUrl(imageUrl);
+            product.setImageUrl("/resources/uploads/" + imageUrl);
         }
         logger.info("Product {} was saved", name);
         return productRepo.save(product);
@@ -80,7 +81,7 @@ public class ProductService {
         }
         Files.write(path, file.getBytes());
         logger.info("Image {} uploaded successfully", fileName);
-        return "/uploads/" + fileName;
+        return fileName;
     }
 
     public List<Product> getProductsByCategory(String categoryName) {
