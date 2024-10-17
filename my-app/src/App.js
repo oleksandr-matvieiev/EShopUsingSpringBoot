@@ -5,12 +5,13 @@ import Login from './components/Login.js';
 import Register from './components/Register.js';
 import AddProduct from './components/AddProduct.js';
 import UserList from './components/UserListForAdmin.js';
+import ActivityLog from './components/ActivityLog.js';
+import ResetPassword from './components/ResetPassword.js';
 
 function App() {
 
     const roles = localStorage.getItem("roles") ? localStorage.getItem("roles").split(",") : [];
 
-    // func for checking role
     const hasAccessToUserList = () => {
         return roles.includes("ROLE_ADMIN") || roles.includes("ROLE_SUPER_ADMIN");
     };
@@ -37,6 +38,11 @@ function App() {
                                 <Link to="/admin/users">User List</Link>
                             </li>
                         )}
+                        {hasAccessToUserList() && (
+                            <li>
+                                <Link to="/activity-log">Activity logs</Link>
+                            </li>
+                        )}
                     </ul>
                 </nav>
 
@@ -45,8 +51,9 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/add-product" element={<AddProduct />} />
-                    {/* url for UserList */}
                     <Route path="/admin/users" element={<UserList />} />
+                    <Route path="/activity-log" element={<ActivityLog />} />
+                    <Route path="/reset-password" element={<ResetPassword />} />  {/* Новий маршрут */}
                 </Routes>
             </div>
         </Router>

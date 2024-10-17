@@ -33,14 +33,9 @@ public class ProductController {
         return products;
     }
 
-
     @PostMapping("/save")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Product> saveProduct(@RequestParam String productName,
-                                               @RequestParam double price,
-                                               @RequestParam int quantity,
-                                               @RequestParam String categoryName,
-                                               @RequestParam(value = "file", required = false) MultipartFile file) {
+    public ResponseEntity<Product> saveProduct(@RequestParam String productName, @RequestParam double price, @RequestParam int quantity, @RequestParam String categoryName, @RequestParam(value = "file", required = false) MultipartFile file) {
         logger.info("Saving product with name: {}", productName);
         try {
             Product savedProduct = service.saveProduct(productName, price, quantity, categoryName, file);

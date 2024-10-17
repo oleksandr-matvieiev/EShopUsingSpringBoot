@@ -1,5 +1,6 @@
 package org.example.sbappwithprofilesandconfigurations.Controller;
 
+import org.example.sbappwithprofilesandconfigurations.Service.ActivityLogService;
 import org.example.sbappwithprofilesandconfigurations.Service.PasswordResetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class PasswordResetController {
     private static final Logger logger = LoggerFactory.getLogger(PasswordResetController.class);
     private final PasswordResetService passwordResetService;
+    private final ActivityLogService logService;
 
-    public PasswordResetController(PasswordResetService passwordResetService) {
+    public PasswordResetController(PasswordResetService passwordResetService, ActivityLogService logService) {
         this.passwordResetService = passwordResetService;
+        this.logService = logService;
     }
 
     @PostMapping("/reset-password-request")

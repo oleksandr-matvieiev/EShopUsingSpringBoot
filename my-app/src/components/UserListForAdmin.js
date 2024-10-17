@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const UserList = () => {
@@ -8,6 +8,8 @@ const UserList = () => {
     const [sortField, setSortField] = useState('username');
     const [sortOrder, setSortOrder] = useState('asc');
     const [page, setPage] = useState(0);
+    const [selectedRole, setSelectedRole] = useState('USER');
+    const [selectedUser, setSelectedUser] = useState('');
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -31,6 +33,26 @@ const UserList = () => {
         };
         fetchUsers();
     }, [search, role, sortField, sortOrder, page]);
+
+    // Функція для надання нової ролі користувачу
+    const assignRole = async (username) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post('http://localhost:8080/api/admin/assign-role', null, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                params: {
+                    username: username,
+                    role: selectedRole,
+                },
+            });
+            console.log(`Role ${selectedRole} assigned to ${username}`);
+            alert(response.data); // Виведення повідомлення про успішне призначення
+        } catch (err) {
+            console.error("Error assigning role", err);
+        }
+    };
 
     return (
         <div>
@@ -58,6 +80,7 @@ const UserList = () => {
                     <th onClick={() => setSortField('username')}>Username</th>
                     <th onClick={() => setSortField('email')}>Email</th>
                     <th>Role</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -66,6 +89,17 @@ const UserList = () => {
                         <td>{user.username}</td>
                         <td>{user.email}</td>
                         <td>{user.roles.map(role => role.roleName).join(', ')}</td>
+                        <td>
+                            {/* Вибір ролі для призначення */}
+                            <select value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
+                                <option value="USER">User</option>
+                                <option value="ADMIN">Admin</option>
+                                <option value="SUPER_ADMIN">Super Admin</option>
+                            </select>
+                            <button onClick={() => assignRole(user.username)}>
+                                Assign Role
+                            </button>
+                        </td>
                     </tr>
                 ))}
                 </tbody>
