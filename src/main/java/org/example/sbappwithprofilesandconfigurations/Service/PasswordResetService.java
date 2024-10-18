@@ -36,7 +36,7 @@ public class PasswordResetService {
         user.setTokenExpiryDate(LocalDateTime.now().plusHours(1));
         userRepo.save(user);
 
-        String resetLink = "http://localhost:8080/reset-password?token=" + resetToken;
+        String resetLink = "http://localhost:3000/reset-password?token=" + resetToken;
         emailService.sendPasswordResetEmail(user.getEmail(), resetLink);
         logger.info("Password reset request for user with email {} send", email);
     }

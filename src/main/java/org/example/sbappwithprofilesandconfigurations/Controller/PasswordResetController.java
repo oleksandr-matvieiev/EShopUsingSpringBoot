@@ -1,29 +1,29 @@
 package org.example.sbappwithprofilesandconfigurations.Controller;
 
-import org.example.sbappwithprofilesandconfigurations.Service.ActivityLogService;
 import org.example.sbappwithprofilesandconfigurations.Service.PasswordResetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/auth/")
 public class PasswordResetController {
     private static final Logger logger = LoggerFactory.getLogger(PasswordResetController.class);
     private final PasswordResetService passwordResetService;
-    private final ActivityLogService logService;
 
-    public PasswordResetController(PasswordResetService passwordResetService, ActivityLogService logService) {
+    public PasswordResetController(PasswordResetService passwordResetService) {
         this.passwordResetService = passwordResetService;
-        this.logService = logService;
     }
 
     @PostMapping("/reset-password-request")
-    public ResponseEntity<String> requestPasswordReset(@RequestParam String email) {
+    public ResponseEntity<String> requestPasswordReset(@RequestBody Map<String, String> requestBody) {
+        String email = requestBody.get("email");
         logger.info("Password reset request for email: {}", email);
         try {
             passwordResetService.requestPasswordReset(email);
@@ -32,10 +32,12 @@ public class PasswordResetController {
             logger.error("Failed to request password reset for email {}: {}", email, e.getMessage());
             return ResponseEntity.status(500).body("Failed to send password reset link");
         }
-
     }
+
     @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
+    public ResponseEntity<String> resetPassword(@RequestBody Map<String, String> requestBody/*@RequestParam String token, @RequestParam String newPassword*/) {
+        String token = requestBody.get("token");
+        String newPassword = requestBody.get("newPassword");
         logger.info("Resetting password for token: {}", token);
         try {
             passwordResetService.resetPassword(token, newPassword);

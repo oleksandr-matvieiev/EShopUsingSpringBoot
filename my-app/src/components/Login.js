@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 
 const Login = () => {
@@ -34,18 +34,20 @@ const Login = () => {
     const handlePasswordResetRequest = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/reset-password-request', { email });
-            setResetMessage("Password reset link sent to your email");
+            const response = await axios.post('http://localhost:8080/api/auth/reset-password-request',{
+                email: email
+        });
+            console.log("Password reset request send ");
         } catch (err) {
-            console.error('Error requesting password reset: ', err);
-            setResetMessage("Failed to send password reset link. Please try again.");
+            console.error('Sending of password reset request failed : ', err);
+            setError("Sending of password reset request failed. Please try again");
         }
     };
 
     return (
         <div>
             <h2>Login</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p style={{color: 'red'}}>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
