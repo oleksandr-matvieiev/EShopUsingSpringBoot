@@ -10,10 +10,10 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NotEmpty(message = "Product name is required")
     private String name;
-    @Min(value = 0,message = "Price must be positive")
+    private String description;
+    @Min(value = 0, message = "Price must be positive")
     private double price;
     private String imageUrl;
     @Min(value = 0, message = "Quantity must be non-negative")
@@ -43,6 +43,22 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public double getPrice() {

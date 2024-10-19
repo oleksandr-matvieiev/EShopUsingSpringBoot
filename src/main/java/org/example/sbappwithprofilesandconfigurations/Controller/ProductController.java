@@ -34,11 +34,10 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Product> saveProduct(@RequestParam String productName, @RequestParam double price, @RequestParam int quantity, @RequestParam String categoryName, @RequestParam(value = "file", required = false) MultipartFile file) {
+    public ResponseEntity<Product> saveProduct(@RequestParam String productName, @RequestParam String description, @RequestParam double price, @RequestParam int quantity, @RequestParam String categoryName, @RequestParam(value = "file", required = false) MultipartFile file) {
         logger.info("Saving product with name: {}", productName);
         try {
-            Product savedProduct = service.saveProduct(productName, price, quantity, categoryName, file);
+            Product savedProduct = service.saveProduct(productName, description, price, quantity, categoryName, file);
             logger.info("Product {} saved successfully ", productName);
             return ResponseEntity.ok(savedProduct);
         } catch (Exception e) {
@@ -46,6 +45,19 @@ public class ProductController {
             return ResponseEntity.status(500).body(null);
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        logger.info("Fetching product with ID: {}", id);
+        try {
+            Product product = service.getProductById(id);
+            return ResponseEntity.ok(product);
+        } catch (Exception e) {
+            logger.error("Error fetching product by ID: {}", id);
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
 
     @GetMapping("/category/{categoryName}")
     public List<Product> getProductsByCategory(@PathVariable String categoryName) {

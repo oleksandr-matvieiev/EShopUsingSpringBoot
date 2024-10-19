@@ -7,6 +7,7 @@ import AddProduct from './components/AddProduct.js';
 import UserList from './components/UserListForAdmin.js';
 import ActivityLog from './components/ActivityLog.js';
 import ResetPassword from './components/ResetPassword.js';
+import ProductDetails from './components/ProductDetails.js'; // Імпортуємо сторінку з інформацією про продукт
 
 function App() {
 
@@ -31,17 +32,17 @@ function App() {
                             <Link to="/register">Register</Link>
                         </li>
                         <li>
-                            <Link to="/add-product">Add product</Link>
+                            <Link to="/add-product">Add Product</Link>
                         </li>
                         {hasAccessToUserList() && (
-                            <li>
-                                <Link to="/admin/users">User List</Link>
-                            </li>
-                        )}
-                        {hasAccessToUserList() && (
-                            <li>
-                                <Link to="/activity-log">Activity logs</Link>
-                            </li>
+                            <>
+                                <li>
+                                    <Link to="/admin/users">User List</Link>
+                                </li>
+                                <li>
+                                    <Link to="/activity-log">Activity Logs</Link>
+                                </li>
+                            </>
                         )}
                     </ul>
                 </nav>
@@ -53,7 +54,8 @@ function App() {
                     <Route path="/add-product" element={<AddProduct />} />
                     <Route path="/admin/users" element={<UserList />} />
                     <Route path="/activity-log" element={<ActivityLog />} />
-                    <Route path="/reset-password" element={<ResetPassword />} />  {/* Новий маршрут */}
+                    <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/product/:id" element={<ProductDetails />} /> {/* Додали маршрут для ProductDetails */}
                 </Routes>
             </div>
         </Router>

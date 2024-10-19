@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 const AddProducts = () => {
-    // Правильне використання useState з квадратними дужками
     const [productName, setProductName] = useState('');
     const [price, setPrice] = useState(0);
     const [quantity, setQuantity] = useState(0);
     const [categoryName, setCategoryName] = useState('');
+    const [description, setDescription] = useState(''); // Додаємо опис
     const [file, setFile] = useState(null);
     const [message, setMessage] = useState('');
 
@@ -22,28 +22,35 @@ const AddProducts = () => {
         formData.append('price', price);
         formData.append('quantity', quantity);
         formData.append('categoryName', categoryName);
+        formData.append('description', description);
         if (file) {
             formData.append('file', file);
         }
 
         try {
-            const token = localStorage.getItem("token")
+            const token = localStorage.getItem("token");
             await axios.post('http://localhost:8080/api/product/save', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${token}`,
                 },
             });
-            setMessage('Product saved.');
+            setMessage('Product saved successfully.');
+            setProductName('');
+            setPrice(0);
+            setQuantity(0);
+            setCategoryName('');
+            setDescription('');
+            setFile(null);
         } catch (error) {
-            setMessage('Error while saving product. Please, check data or try again.');
+            setMessage('Error while saving product. Please check the data or try again.');
             console.error(error);
         }
     };
 
     return (
         <div>
-            <h2>Add product</h2>
+            <h2>Add Product</h2>
             {message && <p>{message}</p>}
             <form onSubmit={handleSubmit}>
                 <div>
@@ -83,10 +90,18 @@ const AddProducts = () => {
                     />
                 </div>
                 <div>
-                    <label>Upload image:</label>
-                    <input type="file" onChange={handleFileChange}/>
+                    <label>Description:</label>
+                    <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)} // Поле для введення опису
+                        required
+                    />
                 </div>
-                <button type="submit">Add product</button>
+                <div>
+                    <label>Upload image:</label>
+                    <input type="file" onChange={handleFileChange} />
+                </div>
+                <button type="submit">Add Product</button>
             </form>
         </div>
     );

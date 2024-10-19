@@ -31,6 +31,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/product/save").hasAnyRole("ADMIN", "SUPER_ADMIN")  // only for admins
                         .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                         .requestMatchers("/api/product/get").permitAll()
+                        .requestMatchers("/api/product/{id}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)

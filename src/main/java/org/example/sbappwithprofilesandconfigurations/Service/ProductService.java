@@ -42,10 +42,11 @@ public class ProductService {
         return productRepo.findAll();
     }
 
-    public Product saveProduct(String name, double price, int quantity, String categoryName, MultipartFile file) throws IOException {
+    public Product saveProduct(String name, String description, double price, int quantity, String categoryName, MultipartFile file) throws IOException {
         logger.info("Saving product with name: {}", name);
         Product product = new Product();
         product.setName(cleanInput(name));
+        product.setDescription(description);
         product.setPrice(price);
         product.setQuantity(quantity);
 
@@ -60,7 +61,7 @@ public class ProductService {
 
         if (file != null && !file.isEmpty()) {
             String imageUrl = saveImage(file);
-            product.setImageUrl("/resources/uploads/" + imageUrl);
+            product.setImageUrl("/uploads/" + imageUrl);
         }
         logger.info("Product {} was saved", name);
         return productRepo.save(product);
@@ -114,4 +115,11 @@ public class ProductService {
         return input == null ? null : input.replace(",", "").trim();
     }
 
+    public Product getProductById(Long id) {
+        return productRepo.findById(id)
+                .orElseThrow(() -> {
+                    logger.error("Product not found with ID: {}", id);
+                    return new IllegalArgumentException("Product not found");
+                });
+    }
 }
