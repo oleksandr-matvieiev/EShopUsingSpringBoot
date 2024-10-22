@@ -6,7 +6,7 @@ const AddProducts = () => {
     const [price, setPrice] = useState(0);
     const [quantity, setQuantity] = useState(0);
     const [categoryName, setCategoryName] = useState('');
-    const [description, setDescription] = useState(''); // Додаємо опис
+    const [description, setDescription] = useState('');
     const [file, setFile] = useState(null);
     const [message, setMessage] = useState('');
 
@@ -93,7 +93,7 @@ const AddProducts = () => {
                     <label>Description:</label>
                     <textarea
                         value={description}
-                        onChange={(e) => setDescription(e.target.value)} // Поле для введення опису
+                        onChange={(e) => setDescription(e.target.value)}
                         required
                     />
                 </div>

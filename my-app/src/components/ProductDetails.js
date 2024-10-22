@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const ProductDetails = () => {
-    const { id } = useParams(); // Отримуємо ID продукту з URL
+    const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [error, setError] = useState(null);
 

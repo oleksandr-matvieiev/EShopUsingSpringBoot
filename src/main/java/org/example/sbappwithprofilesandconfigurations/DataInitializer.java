@@ -1,5 +1,6 @@
 package org.example.sbappwithprofilesandconfigurations;
 
+import org.example.sbappwithprofilesandconfigurations.Exception.RoleNotFoundException;
 import org.example.sbappwithprofilesandconfigurations.Model.Role;
 import org.example.sbappwithprofilesandconfigurations.Model.RoleName;
 import org.example.sbappwithprofilesandconfigurations.Model.User;
@@ -36,7 +37,7 @@ public class DataInitializer implements CommandLineRunner {
 
 
         if (userRepo.findByUsername("superadmin").isEmpty()) {
-            Role superAdminRole = roleRepo.findRoleByRoleName(RoleName.SUPER_ADMIN).orElseThrow(() -> new RuntimeException("SUPER_ADMIN role not found"));
+            Role superAdminRole = roleRepo.findRoleByRoleName(RoleName.SUPER_ADMIN).orElseThrow(() -> new RoleNotFoundException("SUPER_ADMIN role not found"));
             User superAdmin = new User("superadmin", "selfimen2454@gmail.com", encoder.encode("superadmin123"));
             superAdmin.setRoles(Set.of(superAdminRole));
             userRepo.save(superAdmin);

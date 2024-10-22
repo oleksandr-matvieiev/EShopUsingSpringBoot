@@ -6,7 +6,7 @@ import './ProductList.css';
 const ProductList = () => {
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(null);
-    const navigate = useNavigate(); // Оновлюємо з useHistory на useNavigate
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -22,7 +22,7 @@ const ProductList = () => {
     }, []);
 
     const handleProductClick = (id) => {
-        navigate(`/product/${id}`); // Використовуємо navigate для переходу
+        navigate(`/product/${id}`);
     };
 
     return (

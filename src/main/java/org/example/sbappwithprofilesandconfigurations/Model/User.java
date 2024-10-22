@@ -25,7 +25,7 @@ public class User {
     @NotEmpty(message = "Password is required")
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -106,5 +106,18 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", roles=" + roles +
+                ", tokenExpiryDate=" + tokenExpiryDate +
+                ", resetToken='" + resetToken + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }

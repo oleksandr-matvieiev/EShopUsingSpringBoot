@@ -1,5 +1,7 @@
 package org.example.sbappwithprofilesandconfigurations.Service;
 
+import org.example.sbappwithprofilesandconfigurations.Exception.CategoryNotFoundException;
+import org.example.sbappwithprofilesandconfigurations.Exception.ProductNotFoundException;
 import org.example.sbappwithprofilesandconfigurations.Model.Category;
 import org.example.sbappwithprofilesandconfigurations.Model.Product;
 import org.example.sbappwithprofilesandconfigurations.Repo.CategoryRepo;
@@ -22,7 +24,6 @@ public class ProductService {
     private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
     private final ProductRepo productRepo;
     private final CategoryRepo categoryRepo;
-    private final String uploadDir = "src/main/resources/static/uploads/";
 
     public ProductService(ProductRepo productRepo, CategoryRepo categoryRepo) {
         this.productRepo = productRepo;
@@ -33,7 +34,7 @@ public class ProductService {
         return productRepo.findByName(name)
                 .orElseThrow(() -> {
                     logger.error("Product not found with name: {}", name);
-                    return new IllegalArgumentException("Invalid name or product dont exists");
+                    return new ProductNotFoundException("Invalid name or product dont exists");
                 });
     }
 
@@ -54,7 +55,7 @@ public class ProductService {
         Category category = categoryRepo.findByName(cleanInput(categoryName))
                 .orElseThrow(() -> {
                     logger.error("Category not found with name: {}", cleanInput(categoryName));
-                    return new IllegalArgumentException("Category not found");
+                    return new CategoryNotFoundException("Category not found");
                 });
 
         product.setCategory(category);
@@ -75,6 +76,7 @@ public class ProductService {
         }
 
         String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        String uploadDir = "src/main/resources/static/uploads/";
         Path path = Paths.get(uploadDir + fileName);
 
         if (!Files.exists(path.getParent())) {
@@ -89,7 +91,7 @@ public class ProductService {
         Category category = categoryRepo.findByName(categoryName)
                 .orElseThrow(() -> {
                     logger.error("Category not found with name: {} ", categoryName);
-                    return new IllegalArgumentException("Category not found");
+                    return new CategoryNotFoundException("Category not found");
                 });
         logger.info("Fetching products by category: {}", categoryName);
         return productRepo.findByCategory(category);
@@ -104,7 +106,7 @@ public class ProductService {
         Product product = productRepo.findById(productId)
                 .orElseThrow(() -> {
                     logger.error("Product not found with ID: {}", productId);
-                    return new IllegalArgumentException("Product not found");
+                    return new ProductNotFoundException("Product not found");
                 });
         product.setQuantity(newQuantity);
         logger.info("Updated quantity of product {} to {}", product.getName(), newQuantity);
@@ -119,7 +121,7 @@ public class ProductService {
         return productRepo.findById(id)
                 .orElseThrow(() -> {
                     logger.error("Product not found with ID: {}", id);
-                    return new IllegalArgumentException("Product not found");
+                    return new ProductNotFoundException("Product not found");
                 });
     }
 }

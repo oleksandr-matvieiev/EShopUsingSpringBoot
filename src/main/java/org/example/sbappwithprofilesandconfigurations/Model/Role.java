@@ -30,7 +30,11 @@ public class Role {
         return roleName;
     }
 
-    public void setRoleName(RoleName roleName) {
-        this.roleName = roleName;
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", roleName=" + roleName +
+                '}';
     }
 }

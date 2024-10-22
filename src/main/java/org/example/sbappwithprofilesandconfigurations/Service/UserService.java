@@ -1,5 +1,7 @@
 package org.example.sbappwithprofilesandconfigurations.Service;
 
+import org.example.sbappwithprofilesandconfigurations.Exception.RoleNotFoundException;
+import org.example.sbappwithprofilesandconfigurations.Exception.UserNotFoundException;
 import org.example.sbappwithprofilesandconfigurations.Model.Role;
 import org.example.sbappwithprofilesandconfigurations.Model.RoleName;
 import org.example.sbappwithprofilesandconfigurations.Model.User;
@@ -36,7 +38,7 @@ public class UserService implements UserDetailsService {
         User user = userRepo.findByUsername(username)
                 .orElseThrow(() -> {
                     logger.error("User not found: {}", username);
-                    return new UsernameNotFoundException("User not found.");
+                    return new UserNotFoundException("User not found.");
                 });
         logger.info("User {} loaded successfully", username);
         Set<SimpleGrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName())).collect(Collectors.toSet());
@@ -48,12 +50,12 @@ public class UserService implements UserDetailsService {
         User user = userRepo.findByUsername(username)
                 .orElseThrow(() -> {
                     logger.error("User not found: {}", username);
-                    return new UsernameNotFoundException("User not found.");
+                    return new UserNotFoundException("User not found.");
                 });
         Role role = roleRepo.findRoleByRoleName(roleName)
                 .orElseThrow(() -> {
                     logger.error("Role not found: {}", roleName);
-                    return new IllegalArgumentException("Role not found: " + roleName);
+                    return new UserNotFoundException("Role not found: " + roleName);
                 });
 
         if (!user.getRoles().contains(role)) {
@@ -69,7 +71,7 @@ public class UserService implements UserDetailsService {
 
         if (role != null) {
             roleEntity = roleRepo.findRoleByRoleName(RoleName.valueOf(role))
-                    .orElseThrow(() -> new IllegalArgumentException("Role not found: " + role));
+                    .orElseThrow(() -> new RoleNotFoundException("Role not found: " + role));
         }
 
         if (search != null && roleEntity != null) {

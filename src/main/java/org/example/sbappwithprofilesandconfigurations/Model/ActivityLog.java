@@ -20,18 +20,18 @@ public class ActivityLog {
     private String action;
     @NotEmpty(message = "IpAddress is required")
     private String ipAddress;
-    private LocalDateTime timeStamp;
+    private final LocalDateTime timeStamp;
 
 
     public ActivityLog(String username, String action, String ipAddress) {
         this.username = username;
         this.action = action;
         this.ipAddress = ipAddress;
-        timeStamp = LocalDateTime.now();
+        this.timeStamp = LocalDateTime.now();
     }
 
     public ActivityLog() {
-    timeStamp=LocalDateTime.now();
+        this.timeStamp = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -70,7 +70,14 @@ public class ActivityLog {
         return timeStamp;
     }
 
-    public void setTimeStamp(LocalDateTime timeStamp) {
-        this.timeStamp = timeStamp;
+    @Override
+    public String toString() {
+        return "ActivityLog{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", action='" + action + '\'' +
+                ", ipAddress='" + ipAddress + '\'' +
+                ", timeStamp=" + timeStamp +
+                '}';
     }
 }

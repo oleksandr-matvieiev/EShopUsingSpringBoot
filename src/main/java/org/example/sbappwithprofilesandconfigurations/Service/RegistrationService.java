@@ -1,5 +1,7 @@
 package org.example.sbappwithprofilesandconfigurations.Service;
 
+import org.example.sbappwithprofilesandconfigurations.Exception.RoleNotFoundException;
+import org.example.sbappwithprofilesandconfigurations.Exception.UsernameAlreadyExistsException;
 import org.example.sbappwithprofilesandconfigurations.Model.Role;
 import org.example.sbappwithprofilesandconfigurations.Model.RoleName;
 import org.example.sbappwithprofilesandconfigurations.Model.User;
@@ -33,13 +35,13 @@ public class RegistrationService {
             Role role = roleRepo.findRoleByRoleName(roleName)
                     .orElseThrow(() -> {
                         logger.error("Role not found: {}", roleName);
-                        return new IllegalArgumentException("Role not found: " + roleName);
+                        return new RoleNotFoundException("Role not found: " + roleName);
                     });
             roles.add(role);
         }
         if (userRepo.findByUsername(username).isPresent()) {
             logger.warn("Username already exists: {}", username);
-            throw new IllegalArgumentException("Username already exists");
+            throw new UsernameAlreadyExistsException("Username already exists");
         }
         String encodedPassword = passwordEncoder.encode(password);
         User user = new User(username, email, encodedPassword);

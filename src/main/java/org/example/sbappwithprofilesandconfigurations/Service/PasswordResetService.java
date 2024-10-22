@@ -1,5 +1,7 @@
 package org.example.sbappwithprofilesandconfigurations.Service;
 
+import org.example.sbappwithprofilesandconfigurations.Exception.InvalidTokenException;
+import org.example.sbappwithprofilesandconfigurations.Exception.UserNotFoundException;
 import org.example.sbappwithprofilesandconfigurations.Model.User;
 import org.example.sbappwithprofilesandconfigurations.Repo.UserRepo;
 import org.slf4j.Logger;
@@ -28,7 +30,7 @@ public class PasswordResetService {
         User user = userRepo.findByEmail(email)
                 .orElseThrow(() -> {
                     logger.error("User not found for email: {}", email);
-                    return new IllegalArgumentException("User not found");
+                    return new UserNotFoundException("User not found");
                 });
 
         String resetToken = UUID.randomUUID().toString();
@@ -41,10 +43,10 @@ public class PasswordResetService {
         logger.info("Password reset request for user with email {} send", email);
     }
     public void resetPassword(String resetToken, String newPassword) {
-        User user = userRepo.findByResetToken(resetToken).orElseThrow(() -> new IllegalArgumentException("Invalid token"));
+        User user = userRepo.findByResetToken(resetToken).orElseThrow(() -> new InvalidTokenException("Invalid token"));
         if (user.getTokenExpiryDate().isBefore(LocalDateTime.now())) {
             logger.error("Invalid reset token {}", resetToken);
-            throw new IllegalArgumentException("Token has expired");
+            throw new InvalidTokenException("Token has expired");
         }
         user.setPassword(encoder.encode(newPassword));
         user.setResetToken(null);

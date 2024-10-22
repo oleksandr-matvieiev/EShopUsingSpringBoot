@@ -16,7 +16,7 @@ public class Category {
     @NotEmpty(message = "Category name is required")
     private String name;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<Product> products;
     public Category() {
@@ -36,5 +36,14 @@ public class Category {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", products=" + products +
+                '}';
     }
 }
