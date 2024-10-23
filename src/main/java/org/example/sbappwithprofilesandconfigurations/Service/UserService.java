@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -63,6 +64,10 @@ public class UserService implements UserDetailsService {
             logger.info("Assigning role {} to user {}", roleName, username);
             userRepo.save(user);
         }
+    }
+
+    public Optional<User> findUserByUsername(String username) {
+        return userRepo.findByUsername(username);
     }
 
     @Transactional

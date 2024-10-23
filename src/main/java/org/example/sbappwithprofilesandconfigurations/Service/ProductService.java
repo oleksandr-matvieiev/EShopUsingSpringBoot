@@ -113,15 +113,15 @@ public class ProductService {
         return productRepo.save(product);
     }
 
-    private String cleanInput(String input) {
-        return input == null ? null : input.replace(",", "").trim();
-    }
-
     public Product getProductById(Long id) {
         return productRepo.findById(id)
                 .orElseThrow(() -> {
                     logger.error("Product not found with ID: {}", id);
                     return new ProductNotFoundException("Product not found");
                 });
+    }
+
+    private String cleanInput(String input) {
+        return input == null ? null : input.replace(",", "").trim();
     }
 }

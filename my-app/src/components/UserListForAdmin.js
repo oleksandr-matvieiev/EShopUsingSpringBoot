@@ -14,10 +14,10 @@ const UserList = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const token = localStorage.getItem('token'); // Отримуємо токен із локального сховища
+                const token = localStorage.getItem('token');
                 const response = await axios.get('http://localhost:8080/api/admin/userList', {
                     headers: {
-                        Authorization: `Bearer ${token}` // Додаємо токен у заголовок запиту
+                        Authorization: `Bearer ${token}`
                     },
                     params: {
                         search: search,
@@ -34,7 +34,6 @@ const UserList = () => {
         fetchUsers();
     }, [search, role, sortField, sortOrder, page]);
 
-    // Функція для надання нової ролі користувачу
     const assignRole = async (username) => {
         try {
             const token = localStorage.getItem('token');
