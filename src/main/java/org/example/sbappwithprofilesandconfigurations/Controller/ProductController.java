@@ -4,6 +4,7 @@ import org.example.sbappwithprofilesandconfigurations.Model.Product;
 import org.example.sbappwithprofilesandconfigurations.Service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,17 +22,13 @@ public class ProductController {
     }
 
     @GetMapping("/get")
-    public List<Product> getAllProducts() {
-        logger.info("Fetching all products");
+    public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = service.getAllProducts();
-
-        products.forEach(product -> {
-            String imagePath = product.getImageUrl();
-            product.setImageUrl(imagePath);
-        });
-
-        return products;
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(products);
     }
+
 
     @PostMapping("/save")
     public ResponseEntity<Product> saveProduct(@RequestParam String productName, @RequestParam String description, @RequestParam double price, @RequestParam int quantity, @RequestParam String categoryName, @RequestParam(value = "file", required = false) MultipartFile file) {

@@ -56,7 +56,7 @@ public class UserService implements UserDetailsService {
         Role role = roleRepo.findRoleByRoleName(roleName)
                 .orElseThrow(() -> {
                     logger.error("Role not found: {}", roleName);
-                    return new UserNotFoundException("Role not found: " + roleName);
+                    return new RoleNotFoundException("Role not found: " + roleName);
                 });
 
         if (!user.getRoles().contains(role)) {
