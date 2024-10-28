@@ -21,7 +21,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest
-@Import(SecurityConfig.class) // Заміна на ваш клас конфігурації
+@Import(SecurityConfig.class)
 public class JwtAuthenticationFilterTest {
     @Autowired
     private MockMvc mockMvc;
@@ -82,8 +81,6 @@ public class JwtAuthenticationFilterTest {
                         .header("Authorization", "Bearer " + validToken))
                 .andExpect(status().isOk());
     }
-
-
 
 
     @Test

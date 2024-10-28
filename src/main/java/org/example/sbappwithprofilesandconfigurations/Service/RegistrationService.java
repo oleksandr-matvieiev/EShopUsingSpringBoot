@@ -21,6 +21,7 @@ public class RegistrationService {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepo roleRepo;
+
     public RegistrationService(UserRepo userRepo, PasswordEncoder passwordEncoder, RoleRepo roleRepo) {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
@@ -29,6 +30,7 @@ public class RegistrationService {
 
     public User registerUser(String username, String email, String password, Set<RoleName> roleNames) {
         logger.info("Registering new user with username: {}", username);
+
 
         Set<Role> roles = new HashSet<>();
         for (RoleName roleName : roleNames) {
