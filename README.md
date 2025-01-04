@@ -126,11 +126,11 @@ Use Maven to build and run the project:
    ``` POST /api/category/save ``` 
 
 ## API Security
-  -**JWT Authentication**: Secure all endpoints (except for login, registration, and password reset) with JWT tokens.
-  -**Role-Based Access Control**:Ensure role-specific access
-    -**User**: Can browse products and manage their own account.
-    -**Admin**: Can manage products, assign roles, and view users.
-    -**Super Admin**: Has full access to all endpoints and can assign roles.
+  - **JWT Authentication**: Secure all endpoints (except for login, registration, and password reset) with JWT tokens.
+  - **Role-Based Access Control**:Ensure role-specific access
+    - **User**: Can browse products and manage their own account.
+    - **Admin**: Can manage products, assign roles, and view users.
+    - **Super Admin**: Has full access to all endpoints and can assign roles.
 
 ## Testing
 - **Unit Tests**: The project includes JUnit and Mockito tests for services and controllers.
